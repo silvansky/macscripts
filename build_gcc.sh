@@ -37,11 +37,11 @@ echo
 echo "Downloading GCC sources..."
 
 mkdir -p $PREFIX
-#mkdir ${TEMP_DIR}
+mkdir ${TEMP_DIR}
 cd ${TEMP_DIR}
-#wget ftp://ftp.gnu.org/gnu/gcc/gcc-${VERSION}/gcc-${VERSION}.tar.gz
-#tar xfz gcc-$VERSION.tar.gz
-#rm gcc-${VERSION}.tar.gz
+wget ftp://ftp.gnu.org/gnu/gcc/gcc-${VERSION}/gcc-${VERSION}.tar.gz
+tar xfz gcc-$VERSION.tar.gz
+rm gcc-${VERSION}.tar.gz
 cd gcc-${VERSION}
 
 mkdir build

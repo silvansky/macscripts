@@ -10,7 +10,7 @@
 
 VERSION=4.7.0
 VER_SHORT=4.7
-PREFIX=/usr/local/gcc-$(VER_SHORT)
+PREFIX=/usr/local/gcc-${VER_SHORT}
 TEMP_DIR=temp-gcc
 LANGUAGES=c,c++,objc,obj-c++
 MAKE='make -j 4'
@@ -24,7 +24,8 @@ brew-path() { brew info $1 | head -n3 | tail -n1 | cut -d' ' -f1; }
 
 # Prerequisites
 
-echo "\nInstalling gmp, mpfr and libmpc using brew..."
+echo
+echo "Installing gmp, mpfr and libmpc using brew..."
 
 brew install gmp
 brew install mpfr
@@ -32,20 +33,22 @@ brew install libmpc
 
 # Download & install the latest GCC
 
-echo "\nDownloading GCC sources..."
+echo
+echo "Downloading GCC sources..."
 
 mkdir -p $PREFIX
 mkdir ${TEMP_DIR}
 cd ${TEMP_DIR}
 wget ftp://ftp.gnu.org/gnu/gcc/gcc-$VERSION/gcc-$VERSION.tar.gz
 tar xfz gcc-$VERSION.tar.gz
-rm gcc-$VERSION.tar.gz
-cd gcc-$VERSION
+rm gcc-${VERSION}.tar.gz
+cd gcc-${VERSION}
 
 mkdir build
 cd build
 
-echo "\nConfiguring GCC..."
+echo
+echo "Configuring GCC..."
 
 ../configure \
 	--prefix=$PREFIX \
@@ -60,11 +63,13 @@ echo "\nConfiguring GCC..."
 	--enable-lto \
 	--disable-multilib
 
-echo "\nBuilding GCC..."
+echo
+echo "Building GCC..."
 
 $MAKE bootstrap
 
-echo "\nInstalling GCC..."
+echo
+echo "Installing GCC..."
 
 make install
 

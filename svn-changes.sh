@@ -8,7 +8,7 @@ KEY=$1
 DIFF_ARGS=""
 DIFF2HTML=diff2html.py
 DIFF2HTML_PATH=/usr/local
-REPORT_PATH=/tmp/svn-changes-report-`date "+%Y-%m-%dT%H:%M:%S"`
+REPORT_PATH=/tmp/svn-changes-report-`date "+%Y-%m-%dT%H:%M:%S"`.html
 
 if [ "$KEY" == "head" ]
 then

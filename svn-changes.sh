@@ -27,4 +27,8 @@ then
 fi
 
 svn diff ${DIFF_ARGS} | python ${DIFF2HTML_PATH}/${DIFF2HTML} > ${REPORT_PATH}
+
+FSIZE=`stat -f "%z" ${REPORT_PATH}`
+echo "Report file ${REPORT_PATH} created! File size is $FSIZE"
+
 open ${REPORT_PATH}

@@ -12,10 +12,10 @@ REPORT_PATH=/tmp/svn-changes-report-`date "+%Y-%m-%dT%H:%M:%S"`.html
 
 if [ "$KEY" == "head" ]
 then
-	DIFF_ARGS=-r BASE:HEAD
+	DIFF_ARGS="-r BASE:HEAD"
 elif [ "$KEY" == "-r" ]
 then
-	DIFF_ARGS=-r BASE:$2
+	DIFF_ARGS="-r BASE:$2"
 fi
 
 # echo "svn diff ${DIFF_ARGS}"

@@ -6,8 +6,10 @@ LOG_ARGS=""
 if [ "$KEY" == "-r" ]
 then
 	LOG_ARGS="${LOG_ARGS} -r BASE:$2"
-elif [ "$KEY" == "head" ]
+elif [ "$KEY" == "all" ]
 then
+	LOG_ARGS="${LOG_ARGS}"
+else
 	LOG_ARGS="${LOG_ARGS} -r BASE:HEAD"
 fi
 

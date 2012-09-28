@@ -46,64 +46,63 @@ ARG_CODESIGN_ID=
 while getopts ":d:i:b:c:s:n:t:Vvhl" opt; do
 	case $opt in
 	v)
-		echo "${VERSION}" >&2
+		echo "${VERSION}"
 		exit 0
 		;;
 	l)
-		echo "${LICENSE}" >&2
+		echo "${LICENSE}"
 		exit 0
 		;;
 	h)
-		echo "${HELP}" >&2
+		echo "${HELP}"
 		exit 0
 		;;
 	d)
-		echo "Setting target dir to $OPTARG" >&2
+		echo "Setting target dir to $OPTARG"
 		ARG_DIR=$OPTARG
 		;;
 	i)
-		echo "Setting icon to $OPTARG" >&2
+		echo "Setting icon to $OPTARG"
 		ARG_ICON=$OPTARG
 		;;
 	b)
-		echo "Setting background to $OPTARG" >&2
+		echo "Setting background to $OPTARG"
 		ARG_BACKGROUND=$OPTARG
 		;;
 	c)
-		echo "Setting coordinates to $OPTARG" >&2
+		echo "Setting coordinates to $OPTARG"
 		ARG_COORDS=$OPTARG
 		;;
 	s)
-		echo "Setting window size to $OPTARG" >&2
+		echo "Setting window size to $OPTARG"
 		ARG_SIZE=$OPTARG
 		;;
 	n)
-		echo "Setting dmg name to $OPTARG" >&2
+		echo "Setting dmg name to $OPTARG"
 		ARG_DMG_NAME=$OPTARG
 		;;
 	N)
-		echo "Setting dmg volume name to $OPTARG" >&2
+		echo "Setting dmg volume name to $OPTARG"
 		ARG_VOL_NAME=$OPTARG
 		;;
 	t)
-		echo "Setting temporary dir to $OPTARG" >&2
+		echo "Setting temporary dir to $OPTARG"
 		ARG_TMP_DIR=$OPTARG
 		;;
 	S)
-		echo "Setting codesign identity to $OPTARG" >&2
+		echo "Setting codesign identity to $OPTARG"
 		ARG_CODESIGN_ID=$OPTARG
 		;;
 	V)
-		echo "Enabling version info in resulting dmg" >&2
+		echo "Enabling version info in resulting dmg"
 		ARG_ADD_VERSION=1
 		;;
-
 	\?)
-		echo "Invalid option: -$OPTARG" >&2
+		echo "Invalid option: -$OPTARG"
 		exit 1
 		;;
 	:)
- 		echo "Error! Option -$OPTARG requires an argument." >&2
+ 		echo "Error! Option -$OPTARG requires an argument."
 		exit 1
 		;;
 	esac
@@ -116,7 +115,7 @@ set -- $ARGS
 
 APP_BUNDLE_NAME="$@"
 
-if [ "$ARGS" != "" ]; then
+if [ "$ARGS" ]; then
 	echo "Bundle name set to ${APP_BUNDLE_NAME}";
 else
 	echo "Error! Bundle name is not specified."
@@ -130,7 +129,7 @@ fi
 
 TARGET_DIR=${ARG_DIR}
 
-if [ "${TARGET_DIR}" == "" ]; then
+if [ ! "${TARGET_DIR}" ]; then
 	TARGET_DIR=`pwd`
 fi
 
@@ -154,7 +153,7 @@ fi
 BG_IMG_NAME=${ARG_BACKGROUND}
 VOL_ICON_NAME=${ARG_ICON}
 
-if [ ${ARG_ADD_VERSION} ]; then
+if [ "${ARG_ADD_VERSION}" ]; then
 	APP_VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "${APP_BUNDLE_NAME}/Contents/Info.plist"`
 	APP_BUILD_VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "${APP_BUNDLE_NAME}/Contents/Info.plist"`
 	DMG_NAME_SUFFIX=" ${APP_VERSION}.${APP_BUILD_VERSION}"
@@ -271,7 +270,7 @@ tell application \"Finder\"
 		set arrangement of theViewOptions to not arranged
 		set icon size of theViewOptions to 72
 		-- Settings background
-		${NO_BG}set background picture of theViewOptions to file \".background:'${BG_IMG_NAME}'\"
+		${NO_BG}set background picture of theViewOptions to file \".background:${BG_IMG_NAME}\"
 		-- Adding symlink to /Applications
 		make new alias file at container window to POSIX file \"/Applications\" with properties {name:\"Applications\"}
 		-- Reopening
@@ -287,8 +286,6 @@ tell application \"Finder\"
 end tell
 "
 
-echo "$APPLESCRIPT"
-
 echo "$APPLESCRIPT" | osascript
 
 echo "done!"
@@ -299,7 +296,7 @@ chmod -Rf go-w /Volumes/"${VOL_NAME}"
 sync
 sync
 echo "    * Detaching ${device}..."
-hdiutil detach ${device}
+hdiutil detach -force ${device}
 rm -f ${DMG_NAME}
 echo "    * Converting..."
 hdiutil convert "${DMG_NAME_TMP}" -format UDZO -imagekey zlib-level=9 -o "${DMG_NAME}"

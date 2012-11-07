@@ -13,13 +13,6 @@ export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 export LESS_TERMCAP_ue=$'\E[0m'
 
-#functions
-
-function gitcb() # getting git current branch
-{
-	git st 2>/dev/null | head -1 | cut -d ' ' -f 4
-}
-
 # aliases
 
 alias psg="ps -A | grep"

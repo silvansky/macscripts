@@ -6,6 +6,7 @@
 [merge]
 	tool = araxis
 [alias]
+	su = submodule update
 	ci = commit
 	co = checkout
 	st = status

@@ -26,8 +26,6 @@ alias psg="ps -A | grep"
 alias lsa="ls -a"
 alias lsa="lsa | grep"
 alias init-ssh="exec ssh-agent bash && ssh-add && security unlock-keychain"
-alias gpullcb="gpull $(gitcb)"
-alias gpushcb="gpush $(gitcb)"
 
 # output
 

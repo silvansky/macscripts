@@ -1,8 +1,8 @@
 #!/bin/sh
 
-SCRIPTS="openrandom.sh svn-changes.sh svn-log.sh"
-DEST=/usr/local/bin
+. ./installable.sh
 
-for S in $SCRIPTS; do
-	rm -f ${DEST}/$S
+for S in ${SCRIPTS}; do
+	SC=${S%.*}
+	rm -f ${DEST}/${SC}
 done

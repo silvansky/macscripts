@@ -10,7 +10,7 @@ When I come to problem that can be solved with shell scripting, I put a solution
 
 `.zshrc` - zsh settings.
 
-`build_gcc.sh`å - script for building gcc 4.7 for OS X.
+`build_gcc.sh` - script for building gcc 4.7 for OS X.
 
 `convert_video_4_ios.sh` - script for converting any video to iOS-compatible format (mpeg4/aac). This script uses `ffmpeg` for real work. As an arguments, pass list of files to convert (for example, `./convert_video_4_ios.sh *.avi`). Resulting filenames are the same as in input, but with .mp4 extension.
 

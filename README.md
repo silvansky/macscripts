@@ -22,7 +22,7 @@ gpush.sh - alias for git push origin $@.
 
 gpushcb.sh - alias for gpush.sh $(gitcb.sh).
 
-installable.sh - exports list of scripts to be installen in /usr/local/bin.
+installable.sh - exports list of scripts to be installed in /usr/local/bin.
 
 installscripts.sh - installs some scripts in /usr/local/bin (as symlinks without .sh)
 

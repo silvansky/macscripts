@@ -6,7 +6,9 @@ When I come to problem that can be solved with shell scripting, I put a solution
 
 `.gitconfig` - my config for `git`. All my favorite aliases live here.
 
-`.profile` - bash profile, common defines, functions, etc. for bash. I use zsh for now, but I really call this file from .zshrc.
+`.profile` - bash profile, common defines, functions, etc, for bash. I use zsh for now, but I really call this file from `.zshrc`.
+
+`.zshrc` - zsh settings.
 
 `build_gcc.sh`å - script for building gcc 4.7 for OS X.
 

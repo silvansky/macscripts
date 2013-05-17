@@ -26,7 +26,7 @@ installable.sh - exports list of scripts to be installed in /usr/local/bin.
 
 installscripts.sh - installs some scripts in /usr/local/bin (as symlinks without .sh)
 
-make_dmg.sh - highly customizable utility for creating .dmg image from an application. See [http://habrahabr.ru/post/152677/](http://habrahabr.ru/post/152677/) for more inforvation (in russian) or use make_dmg.sh -h for short help.
+make_dmg.sh - highly customizable utility for creating .dmg image from an application. See [http://habrahabr.ru/post/152677/](http://habrahabr.ru/post/152677/) for more information (in russian) or use make_dmg.sh -h for short help.
 
 openrandom.sh - opens random file from current directory (recursive) with "open" command. This script uses my [randstr](https://github.com/silvansky/randstr) command line tool.
 

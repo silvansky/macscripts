@@ -46,6 +46,7 @@ zstyle ':completion:*:killall:*'   force-list always
 
 hash -d proj=~/Projects
 hash -d imosx=~proj/imosx
+hash -d imios=~proj/Agent-ios/Agent
 hash -d apps=/Applications
 hash -d appsupp=~/Library/Application\ Support
 hash -d xcarchives=~/Library/Developer/Xcode/Archives

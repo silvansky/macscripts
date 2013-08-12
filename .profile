@@ -19,7 +19,14 @@ alias psg="ps -A | grep"
 alias lsa="ls -a"
 alias lsa="lsa | grep"
 alias init-ssh="exec ssh-agent bash && ssh-add && security unlock-keychain"
+alias ff="open -a Firefox"
 
 # output
 
 date
+
+export iOSOpenDevPath=/opt/iOSOpenDev
+export iOSOpenDevDevice=
+export PATH=/opt/iOSOpenDev/bin:$PATH
+
+

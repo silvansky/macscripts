@@ -8,6 +8,13 @@ fi
 
 RESPONSE=$(curl -s "http://habrahabr.ru/api/profile/$USERNAME/")
 
+ERROR=$(echo $RESPONSE | grep "<error>")
+
+if [ "$ERROR" != "" ]; then
+	echo "Not found!"
+	exit 1;
+fi
+
 RAW=$(echo $RESPONSE | xmllint - | sed -ne 's/<[^>]\{1,\}>//gp')
 
 KARMA=$(echo $RAW | cut -d ' ' -f 2)

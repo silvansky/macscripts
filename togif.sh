@@ -73,28 +73,31 @@ FILE_BASE_NAME="${INPUT_FILE%.*}"
 TMP_FILE="${FILE_BASE_NAME}_tmp.gif"
 OUTPUT_FILE="${FILE_BASE_NAME}.gif"
 
-rm -f $TMP_FILE
+rm -f "${TMP_FILE}"
 
 # step 0: printing info
-printf "Input file: \e[01;32m${INPUT_FILE}\e[00m, info:\n"
-ffprobe ${INPUT_FILE} 2>&1 | egrep "Stream|Duration"
+INPUT_FILE_SIZE=$(du -h "${INPUT_FILE}" | awk '{print $1}')
+printf "Input file: \e[01;32m${INPUT_FILE}\e[00m (${INPUT_FILE_SIZE}), info:\n"
+ffprobe "${INPUT_FILE}" 2>&1 | egrep "Stream|Duration"
 
 # step 1: convert to gif
 printf "Converting to gif... "
-ffmpeg_cmd="ffmpeg -loglevel panic -i $INPUT_FILE -pix_fmt rgb24 $SIZE_ARG$SPEED_ARG$TMP_FILE"
-$($ffmpeg_cmd)
+ffmpeg -loglevel panic -i "${INPUT_FILE}" -pix_fmt rgb24 ${SIZE_ARG}${SPEED_ARG}"${TMP_FILE}"
 
-printf "done!\n"
+TMP_FILE_SIZE=$(du -h "${TMP_FILE}" | awk '{print $1}')
 
-rm -f ${base}.gif
+printf "done! ($TMP_FILE_SIZE)\n"
+
+rm -f "${OUTPUT_FILE}"
 
 # step 2: optimization
 printf "Optimizing... "
-convert -layers Optimize "$TMP_FILE" "${OUTPUT_FILE}"
+convert -layers Optimize "${TMP_FILE}" "${OUTPUT_FILE}"
 
-printf "done!\n"
+OUTPUT_FILE_SIZE=$(du -h "${OUTPUT_FILE}" | awk '{print $1}')
+printf "done! (${OUTPUT_FILE_SIZE})\n"
 
 # step 3: remove tmp file
-rm -f $TMP_FILE
+rm -f "${TMP_FILE}"
 
 printf "GIF generated! \e[01;32m$OUTPUT_FILE\e[00m\n"

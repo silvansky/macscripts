@@ -13,6 +13,10 @@ export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 export LESS_TERMCAP_ue=$'\E[0m'
 
+if [ -e ~/.privatevars ]; then
+	. ~/.privatevars
+fi
+
 # aliases
 
 alias psg="ps -A | grep"
@@ -27,3 +31,5 @@ date
 export iOSOpenDevPath=/opt/iOSOpenDev
 export iOSOpenDevDevice=
 export PATH=/opt/iOSOpenDev/bin:$PATH
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

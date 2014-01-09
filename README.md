@@ -1,6 +1,6 @@
-# macscripts - my collection of useful OS X scripts for bash
+# macscripts - my collection of useful OS X shell scripts
 
-When I come to problem that can be solved with shell scripting, I put a solution here. Feel free to fork and modify my code.
+When I come to a problem that can be solved with shell scripting, I put a solution here. Feel free to fork and modify my code.
 
 ## Some explanations
 
@@ -13,6 +13,10 @@ When I come to problem that can be solved with shell scripting, I put a solution
 `build_gcc.sh` - script for building gcc 4.7 for OS X.
 
 `convert_video_4_ios.sh` - script for converting any video to iOS-compatible format (mpeg4/aac). This script uses `ffmpeg` for real work. As an arguments, pass list of files to convert (for example, `./convert_video_4_ios.sh *.avi`). Resulting filenames are the same as in input, but with .mp4 extension.
+
+`duit.sh` - a wrapper for `du` which outputs results in a human-readable format and sorted by size.
+
+`togif.sh` - a wrapper for `ffmpeg` and ImageMagic's `convert` which converts any video file to gif format. Quality is bad so it needs some optimization.
 
 `gitcb.sh` - when called from git repository, outputs current branch name. If you are in detached head state, it outputs empty string.
 

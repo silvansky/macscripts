@@ -7,6 +7,7 @@
 	tool = araxis
 [alias]
 	su = submodule update
+	sf = submodule foreach
 	ci = commit
 	co = checkout
 	st = status

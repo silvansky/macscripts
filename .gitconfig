@@ -15,6 +15,7 @@
 	br = branch
 	df = diff
 	plog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	slog = log --pretty=format:'%H'
 [core]
 	excludesfile = ~/.gitignore_global
 [difftool "sourcetree"]

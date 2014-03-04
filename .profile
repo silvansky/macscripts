@@ -13,6 +13,10 @@ export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 export LESS_TERMCAP_ue=$'\E[0m'
 
+export USE_LOCAL_PODS=yes
+export LOCAL_PODS_FOLDER=~/Projects/
+
+
 if [ -e ~/.privatevars ]; then
 	. ~/.privatevars
 fi
@@ -34,3 +38,7 @@ export iOSOpenDevDevice=
 export PATH=/opt/iOSOpenDev/bin:$PATH
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+# selecting ruby version with rvm
+source $(rvm 2.0.0-p353 do rvm env --path)
+

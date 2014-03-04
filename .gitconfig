@@ -1,5 +1,5 @@
 [user]
-	name = silvansky
+	name = Valentine Silvansky
 	email = v.silvansky@gmail.com
 [mergetool "araxis"]
 	cmd = araxis-mergetool \"$LOCAL\" \"$REMOTE\" \"$MERGED\" \"$BASE\"

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 SEARCH_PATH="${1}"
 
@@ -25,4 +25,4 @@ function process_item()
 
 export -f process_item
 
-find "${SEARCH_PATH}" -d 1 -exec bash -c 'process_item "${0}"' {} \; | sort -rn -k1
+find "${SEARCH_PATH}" -d 1 -exec /bin/bash -c 'process_item "${0}"' {} \; | sort -rn -k1

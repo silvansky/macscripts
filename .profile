@@ -40,5 +40,5 @@ export PATH=/opt/iOSOpenDev/bin:$PATH
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # selecting ruby version with rvm
-source $(rvm 2.0.0-p353 do rvm env --path)
+source $(rvm 2.0.0-p481 do rvm env --path)
 

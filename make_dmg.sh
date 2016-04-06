@@ -43,7 +43,7 @@ ARG_ADD_VERSION=
 ARG_CODESIGN_ID=
 
 # reading options
-while getopts ":d:i:b:c:s:n:t:Vvhl" opt; do
+while getopts ":d:i:b:c:s:n:N:t:Vvhl" opt; do
 	case $opt in
 	v)
 		echo "${VERSION}"

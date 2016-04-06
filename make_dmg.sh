@@ -10,7 +10,7 @@ LICENSE="This software is distibuted under GNU GPLv3 license.
 Visit http://www.gnu.org/licenses/gpl-3.0.txt for more information."
 
 HELP="Usage:
-  $0 [options...] bundle_name
+  $0 [options...] bundle_path
   $0 -v
   $0 -h
   $0 -l
@@ -113,17 +113,18 @@ shift $(($OPTIND - 1))
 ARGS=$*
 set -- $ARGS
 
-APP_BUNDLE_NAME="$@"
+APP_BUNDLE_PATH="$@"
+APP_BUNDLE_NAME=`basename ${APP_BUNDLE_PATH}`
 
 if [ "$ARGS" ]; then
-	echo "Bundle name set to ${APP_BUNDLE_NAME}";
+	echo "Bundle path set to ${APP_BUNDLE_PATH}";
 else
-	echo "Error! Bundle name is not specified."
+	echo "Error! Bundle path is not specified."
 	exit 1;
 fi
 
-if [ ! -e "${APP_BUNDLE_NAME}" ]; then
-	echo "Error! Bundle \"${APP_BUNDLE_NAME}\" does not exist!"
+if [ ! -e "${APP_BUNDLE_PATH}" ]; then
+	echo "Error! Bundle \"${APP_BUNDLE_PATH}\" does not exist!"
 	exit 1
 fi
 
@@ -155,8 +156,8 @@ BG_IMG_NAME=`basename ${BG_IMG_PATH}`
 VOL_ICON_NAME=${ARG_ICON}
 
 if [ "${ARG_ADD_VERSION}" ]; then
-	APP_VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "${APP_BUNDLE_NAME}/Contents/Info.plist"`
-	APP_BUILD_VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "${APP_BUNDLE_NAME}/Contents/Info.plist"`
+	APP_VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "${APP_BUNDLE_PATH}/Contents/Info.plist"`
+	APP_BUILD_VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "${APP_BUNDLE_PATH}/Contents/Info.plist"`
 	DMG_NAME_SUFFIX=" ${APP_VERSION}.${APP_BUILD_VERSION}"
 else
 	APP_VERSION=
@@ -178,13 +179,13 @@ CODESIGN_IDENTITY=${ARG_CODESIGN_ID}
 
 if [ "${CODESIGN_IDENTITY}" ]; then
 	echo "*** Signing ${APP_BUNDLE_NAME} with identity '${CODESIGN_IDENTITY}'... "
-	codesign -fs "${CODESIGN_IDENTITY}" "${APP_BUNDLE_NAME}"
+	codesign -fs "${CODESIGN_IDENTITY}" "${APP_BUNDLE_PATH}"
 	echo "done!"
 fi
 
-echo -n "*** Copying ${APP_BUNDLE_NAME} to the temporary dir... "
+echo -n "*** Copying ${APP_BUNDLE_PATH} to the temporary dir... "
 mkdir "$TMP_DIR"
-cp -R "${APP_BUNDLE_NAME}" ${TMP_DIR}/
+cp -R "${APP_BUNDLE_PATH}" ${TMP_DIR}/
 echo "done!"
 
 echo -n "*** Creating temporary dmg disk image..."

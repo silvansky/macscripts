@@ -25,6 +25,7 @@ Available options:
   -N <name>           Specify resulting dmg's volume name. If not specified, defaults to \"BundleName\".
   -t <folder>         Specify temporary dir. If not specified, defaults to ./tmp.
   -S <identity>       Codesign bundle with specified identity before making dmg. If this option is not used, no signing performed. Warning! This will replace existing code signature if any!
+  -I <integer>        Specify dmg icons size in Finder. If not specified, defaults to 72.
   -V                  Add bundle version to dmg name as a suffix. Version is read from bundle's Info.plist file.
 
   -v                  Print version acnd copyright and exit.
@@ -41,9 +42,10 @@ ARG_VOL_NAME="BundleName"
 ARG_TMP_DIR="./tmp"
 ARG_ADD_VERSION=
 ARG_CODESIGN_ID=
+ARG_ICON_SIZE=72
 
 # reading options
-while getopts ":d:i:b:c:s:n:N:t:Vvhl" opt; do
+while getopts ":d:i:b:c:s:n:N:t:I:Vvhl" opt; do
 	case $opt in
 	v)
 		echo "${VERSION}"
@@ -92,6 +94,10 @@ while getopts ":d:i:b:c:s:n:N:t:Vvhl" opt; do
 	S)
 		echo "Setting codesign identity to $OPTARG"
 		ARG_CODESIGN_ID=$OPTARG
+		;;
+	I)
+		echo "Setting icons size to $OPTARG"
+		ARG_ICON_SIZE=$OPTARG
 		;;
 	V)
 		echo "Enabling version info in resulting dmg"
@@ -270,7 +276,7 @@ tell application \"Finder\"
 		set the bounds of container window to {${WINDOW_LEFT}, ${WINDOW_TOP}, ${WINDOW_RIGHT}, ${WINDOW_BOTTOM}}
 		set theViewOptions to the icon view options of container window
 		set arrangement of theViewOptions to not arranged
-		set icon size of theViewOptions to 72
+		set icon size of theViewOptions to ${ARG_ICON_SIZE}
 		-- Settings background
 		${NO_BG}set background picture of theViewOptions to file \".background:${BG_IMG_NAME}\"
 		-- Adding symlink to /Applications

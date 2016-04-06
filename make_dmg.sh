@@ -150,7 +150,8 @@ if [ ! "${VOL_NAME}" ]; then
 fi
 
 
-BG_IMG_NAME=${ARG_BACKGROUND}
+BG_IMG_PATH=${ARG_BACKGROUND}
+BG_IMG_NAME=`basename ${BG_IMG_PATH}`
 VOL_ICON_NAME=${ARG_ICON}
 
 if [ "${ARG_ADD_VERSION}" ]; then
@@ -206,7 +207,7 @@ if [ "${ARG_BACKGROUND}" ]; then
 
 	BG_FOLDER="/Volumes/${VOL_NAME}/.background"
 	mkdir "${BG_FOLDER}"
-	cp "${BG_IMG_NAME}" "${BG_FOLDER}/"
+	cp "${BG_IMG_PATH}" "${BG_FOLDER}/"
 
 	echo "done!"
 	NO_BG=

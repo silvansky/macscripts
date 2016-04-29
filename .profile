@@ -26,7 +26,7 @@ fi
 alias psg="ps -A | grep"
 alias lsa="ls -a"
 alias init-ssh="exec ssh-agent bash && ssh-add && security unlock-keychain"
-alias brewup="brew update && brew upgrade"
+alias brewup="brew update && brew upgrade --all"
 alias ql="qlmanage -p 2>/dev/null"
 
 # output

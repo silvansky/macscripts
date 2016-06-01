@@ -1,3 +1,5 @@
 #!/bin/sh
 
-git symbolic-ref -q HEAD | sed s:refs/heads/::
+if git ls-files >& /dev/null; then
+	git symbolic-ref --short HEAD
+fi

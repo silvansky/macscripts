@@ -10,7 +10,7 @@ LICENSE="This software is distibuted under GNU GPLv3 license.
 Visit http://www.gnu.org/licenses/gpl-3.0.txt for more information."
 
 HELP="Usage:
-  $0 [options...] bundle_name
+  $0 [options...] bundle_path
   $0 -v
   $0 -h
   $0 -l
@@ -25,6 +25,7 @@ Available options:
   -N <name>           Specify resulting dmg's volume name. If not specified, defaults to \"BundleName\".
   -t <folder>         Specify temporary dir. If not specified, defaults to ./tmp.
   -S <identity>       Codesign bundle with specified identity before making dmg. If this option is not used, no signing performed. Warning! This will replace existing code signature if any!
+  -I <integer>        Specify dmg icons size in Finder. If not specified, defaults to 72.
   -V                  Add bundle version to dmg name as a suffix. Version is read from bundle's Info.plist file.
 
   -v                  Print version acnd copyright and exit.
@@ -36,14 +37,15 @@ ARG_ICON=
 ARG_BACKGROUND=
 ARG_COORDS=
 ARG_SIZE="640:480"
-ARG_DMG_NAME=
-ARG_VOL_NAME=
+ARG_DMG_NAME="BundleName"
+ARG_VOL_NAME="BundleName"
 ARG_TMP_DIR="./tmp"
 ARG_ADD_VERSION=
 ARG_CODESIGN_ID=
+ARG_ICON_SIZE=72
 
 # reading options
-while getopts ":d:i:b:c:s:n:t:Vvhl" opt; do
+while getopts ":d:i:b:c:s:n:N:t:I:Vvhl" opt; do
 	case $opt in
 	v)
 		echo "${VERSION}"
@@ -93,6 +95,10 @@ while getopts ":d:i:b:c:s:n:t:Vvhl" opt; do
 		echo "Setting codesign identity to $OPTARG"
 		ARG_CODESIGN_ID=$OPTARG
 		;;
+	I)
+		echo "Setting icons size to $OPTARG"
+		ARG_ICON_SIZE=$OPTARG
+		;;
 	V)
 		echo "Enabling version info in resulting dmg"
 		ARG_ADD_VERSION=1
@@ -113,17 +119,18 @@ shift $(($OPTIND - 1))
 ARGS=$*
 set -- $ARGS
 
-APP_BUNDLE_NAME="$@"
+APP_BUNDLE_PATH="$@"
+APP_BUNDLE_NAME=`basename ${APP_BUNDLE_PATH}`
 
 if [ "$ARGS" ]; then
-	echo "Bundle name set to ${APP_BUNDLE_NAME}";
+	echo "Bundle path set to ${APP_BUNDLE_PATH}";
 else
-	echo "Error! Bundle name is not specified."
+	echo "Error! Bundle path is not specified."
 	exit 1;
 fi
 
-if [ ! -e "${APP_BUNDLE_NAME}" ]; then
-	echo "Error! Bundle \"${APP_BUNDLE_NAME}\" does not exist!"
+if [ ! -e "${APP_BUNDLE_PATH}" ]; then
+	echo "Error! Bundle \"${APP_BUNDLE_PATH}\" does not exist!"
 	exit 1
 fi
 
@@ -150,12 +157,13 @@ if [ ! "${VOL_NAME}" ]; then
 fi
 
 
-BG_IMG_NAME=${ARG_BACKGROUND}
+BG_IMG_PATH=${ARG_BACKGROUND}
+BG_IMG_NAME=`basename ${BG_IMG_PATH}`
 VOL_ICON_NAME=${ARG_ICON}
 
 if [ "${ARG_ADD_VERSION}" ]; then
-	APP_VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "${APP_BUNDLE_NAME}/Contents/Info.plist"`
-	APP_BUILD_VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "${APP_BUNDLE_NAME}/Contents/Info.plist"`
+	APP_VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "${APP_BUNDLE_PATH}/Contents/Info.plist"`
+	APP_BUILD_VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "${APP_BUNDLE_PATH}/Contents/Info.plist"`
 	DMG_NAME_SUFFIX=" ${APP_VERSION}.${APP_BUILD_VERSION}"
 else
 	APP_VERSION=
@@ -177,13 +185,13 @@ CODESIGN_IDENTITY=${ARG_CODESIGN_ID}
 
 if [ "${CODESIGN_IDENTITY}" ]; then
 	echo "*** Signing ${APP_BUNDLE_NAME} with identity '${CODESIGN_IDENTITY}'... "
-	codesign -fs "${CODESIGN_IDENTITY}" "${APP_BUNDLE_NAME}"
+	codesign -fs "${CODESIGN_IDENTITY}" "${APP_BUNDLE_PATH}"
 	echo "done!"
 fi
 
-echo -n "*** Copying ${APP_BUNDLE_NAME} to the temporary dir... "
+echo -n "*** Copying ${APP_BUNDLE_PATH} to the temporary dir... "
 mkdir "$TMP_DIR"
-cp -R "${APP_BUNDLE_NAME}" ${TMP_DIR}/
+cp -R "${APP_BUNDLE_PATH}" ${TMP_DIR}/
 echo "done!"
 
 echo -n "*** Creating temporary dmg disk image..."
@@ -206,7 +214,7 @@ if [ "${ARG_BACKGROUND}" ]; then
 
 	BG_FOLDER="/Volumes/${VOL_NAME}/.background"
 	mkdir "${BG_FOLDER}"
-	cp "${BG_IMG_NAME}" "${BG_FOLDER}/"
+	cp "${BG_IMG_PATH}" "${BG_FOLDER}/"
 
 	echo "done!"
 	NO_BG=
@@ -268,7 +276,7 @@ tell application \"Finder\"
 		set the bounds of container window to {${WINDOW_LEFT}, ${WINDOW_TOP}, ${WINDOW_RIGHT}, ${WINDOW_BOTTOM}}
 		set theViewOptions to the icon view options of container window
 		set arrangement of theViewOptions to not arranged
-		set icon size of theViewOptions to 72
+		set icon size of theViewOptions to ${ARG_ICON_SIZE}
 		-- Settings background
 		${NO_BG}set background picture of theViewOptions to file \".background:${BG_IMG_NAME}\"
 		-- Adding symlink to /Applications

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SLOWDOWN_FACTOR=10
+SLOWDOWN_FACTOR=8
 KEEP_TMP_FILES=false
 
 while getopts ":s:k" opt; do

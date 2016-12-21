@@ -120,7 +120,8 @@ ARGS=$*
 set -- $ARGS
 
 APP_BUNDLE_PATH="$@"
-APP_BUNDLE_NAME=`basename ${APP_BUNDLE_PATH}`
+APP_BUNDLE_NAME=$(basename "${APP_BUNDLE_PATH}")
+echo "App bundle name set to ${APP_BUNDLE_NAME}"
 
 if [ "$ARGS" ]; then
 	echo "Bundle path set to ${APP_BUNDLE_PATH}";
@@ -158,7 +159,7 @@ fi
 
 
 BG_IMG_PATH=${ARG_BACKGROUND}
-BG_IMG_NAME=`basename ${BG_IMG_PATH}`
+BG_IMG_NAME=$(basename "${BG_IMG_PATH}")
 VOL_ICON_NAME=${ARG_ICON}
 
 if [ "${ARG_ADD_VERSION}" ]; then

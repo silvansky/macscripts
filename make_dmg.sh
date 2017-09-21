@@ -307,7 +307,7 @@ echo "$APPLESCRIPT" | osascript
 
 echo "done!"
 
-echo "*** Converting tempoprary dmg image in compressed readonly final image... "
+echo "*** Converting temporary dmg image in compressed readonly final image... "
 echo "    * Changing mode and syncing..."
 chmod -Rf go-w /Volumes/"${VOL_NAME}"
 sync

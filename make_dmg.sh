@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION_NUMBER="1.0 beta"
+VERSION_NUMBER="1.1"
 
 VERSION="$0 version ${VERSION_NUMBER}
 Original name: make_dmg.sh
@@ -25,12 +25,15 @@ Available options:
   -N <name>           Specify resulting dmg's volume name. If not specified, defaults to \"BundleName\".
   -t <folder>         Specify temporary dir. If not specified, defaults to ./tmp.
   -S <identity>       Codesign bundle with specified identity before making dmg. If this option is not used, no signing performed. Warning! This will replace existing code signature if any!
+  -D <identity>       Codesign dmg with specified identity. If this option is not used, no signing performed.
   -I <integer>        Specify dmg icons size in Finder. If not specified, defaults to 72.
   -V                  Add bundle version to dmg name as a suffix. Version is read from bundle's Info.plist file.
 
   -v                  Print version acnd copyright and exit.
   -h                  Print help and exit.
-  -l                  Print license info and exit."
+  -l                  Print license info and exit.
+
+Identity names can be listed with: security find-identity -v -p codesigning"
 
 ARG_DIR=`pwd`
 ARG_ICON=
@@ -42,10 +45,11 @@ ARG_VOL_NAME="BundleName"
 ARG_TMP_DIR="./tmp"
 ARG_ADD_VERSION=
 ARG_CODESIGN_ID=
+ARG_DMG_CODESIGN_ID=
 ARG_ICON_SIZE=72
 
 # reading options
-while getopts ":d:i:b:c:s:n:N:t:I:Vvhl" opt; do
+while getopts ":d:i:b:c:s:n:N:t:S:D:I:Vvhl" opt; do
 	case $opt in
 	v)
 		echo "${VERSION}"
@@ -92,8 +96,12 @@ while getopts ":d:i:b:c:s:n:N:t:I:Vvhl" opt; do
 		ARG_TMP_DIR=$OPTARG
 		;;
 	S)
-		echo "Setting codesign identity to $OPTARG"
+		echo "Setting bundle codesign identity to $OPTARG"
 		ARG_CODESIGN_ID=$OPTARG
+		;;
+	D)
+		echo "Setting dmg codesign identity to $OPTARG"
+		ARG_DMG_CODESIGN_ID=$OPTARG
 		;;
 	I)
 		echo "Setting icons size to $OPTARG"
@@ -310,6 +318,18 @@ rm -f ${DMG_NAME}
 echo "    * Converting..."
 hdiutil convert "${DMG_NAME_TMP}" -format UDZO -imagekey zlib-level=9 -o "${DMG_NAME}"
 echo "done!"
+
+DMG_CODESIGN_IDENTITY=${ARG_DMG_CODESIGN_ID}
+
+if [ "${DMG_CODESIGN_IDENTITY}" ]; then
+	echo "*** Signing dmg with identity '${DMG_CODESIGN_IDENTITY}'... "
+	codesign -fs "${DMG_CODESIGN_IDENTITY}" "${DMG_NAME}"
+	echo "done!"
+
+	echo "*** Verifying signed dmg (macOS Sierra is required)... "
+	spctl -a -t open --context context:primary-signature -v "${DMG_NAME}"
+	echo "done!"
+fi
 
 echo -n "*** Removing temporary image... "
 rm -f "${DMG_NAME_TMP}"

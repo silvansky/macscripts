@@ -34,12 +34,16 @@ alias shots="open /Users/valentine/Dropbox/Скриншоты"
 
 date
 
-export iOSOpenDevPath=/opt/iOSOpenDev
-export iOSOpenDevDevice=
-export PATH=/opt/iOSOpenDev/bin:$PATH
+export PATH="/opt/iOSOpenDev/bin:$PATH"
+export PATH="$HOME/.fastlane/bin:$PATH"
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # selecting ruby version with rvm
-source $(rvm 2.0.0-p481 do rvm env --path)
+source $(rvm 2.3.1 do rvm env --path)
 
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+export NODE_PATH="/usr/local/lib/node_modules"

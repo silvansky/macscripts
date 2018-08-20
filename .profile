@@ -26,7 +26,7 @@ fi
 alias psg="ps -A | grep"
 alias lsa="ls -a"
 alias init-ssh="exec ssh-agent bash && ssh-add && security unlock-keychain"
-alias brewup="brew update && brew upgrade --all && brew cleanup"
+alias brewup="brew update && brew upgrade && brew cleanup"
 alias ql="qlmanage -p 2>/dev/null"
 alias shots="open /Users/valentine/Dropbox/Скриншоты"
 

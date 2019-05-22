@@ -29,7 +29,7 @@ Available options:
   -I <integer>        Specify dmg icons size in Finder. If not specified, defaults to 72.
   -V                  Add bundle version to dmg name as a suffix. Version is read from bundle's Info.plist file.
 
-  -v                  Print version acnd copyright and exit.
+  -v                  Print version and copyright and exit.
   -h                  Print help and exit.
   -l                  Print license info and exit.
 
@@ -307,7 +307,7 @@ echo "$APPLESCRIPT" | osascript
 
 echo "done!"
 
-echo "*** Converting tempoprary dmg image in compressed readonly final image... "
+echo "*** Converting temporary dmg image in compressed readonly final image... "
 echo "    * Changing mode and syncing..."
 chmod -Rf go-w /Volumes/"${VOL_NAME}"
 sync

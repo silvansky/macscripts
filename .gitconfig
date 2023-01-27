@@ -31,3 +31,13 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[gitflow "feature.finish"]
+	push = yes
+[gitflow "bugfix.finish"]
+	push = yes
+[gitflow "hotfix.finish"]
+	push = yes
+[gitflow "feature.release"]
+	push = yes
+[gitflow "release.finish"]
+	push = yes

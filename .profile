@@ -27,9 +27,8 @@ fi
 alias psg="ps -A | grep"
 alias lsa="ls -a"
 alias init-ssh="exec ssh-agent bash && ssh-add && security unlock-keychain"
-alias brewup="brew update && brew upgrade && brew cask upgrade && brew cleanup"
+alias brewup="brew update && brew upgrade && brew upgrade --cask && brew cleanup"
 alias ql="qlmanage -p 2>/dev/null"
-alias shots="open /Users/valentine/Dropbox/Скриншоты"
 
 # output
 
@@ -37,15 +36,6 @@ date
 
 export PATH="/opt/iOSOpenDev/bin:$PATH"
 export PATH="$HOME/.fastlane/bin:$PATH"
-
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
-export NODE_PATH="/usr/local/lib/node_modules"
-
-export NVM_DIR="$HOME/.nvm"
-. "/usr/local/opt/nvm/nvm.sh"
 
 eval "$(rbenv init -)"
 

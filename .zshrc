@@ -45,11 +45,8 @@ zstyle ':completion:*:*:killall:*' menu yes select
 zstyle ':completion:*:killall:*'   force-list always
 
 hash -d proj=~/Projects
-hash -d imosx=~proj/imosx
-hash -d imios=~proj/Agent-ios/Agent
 hash -d apps=/Applications
 hash -d appsupp=~/Library/Application\ Support
-hash -d xcarchives=~/Library/Developer/Xcode/Archives
 
 setopt EXTENDED_GLOB
 
@@ -61,4 +58,5 @@ bindkey '^[[1;3C' forward-word # alt+right
 export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+# Set PATH, MANPATH, etc., for Homebrew.
+eval "$(/opt/homebrew/bin/brew shellenv)"

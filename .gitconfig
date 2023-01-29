@@ -18,6 +18,7 @@
 	slog = log --pretty=format:'%H'
 [core]
 	excludesfile = /Users/valentine/.gitignore_global
+	editor = mcedit
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
